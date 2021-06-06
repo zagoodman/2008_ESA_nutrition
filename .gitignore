@@ -140,6 +140,9 @@ dmypy.json
 
 ### TeX Template
 
+# custom
+*cache.yaml
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

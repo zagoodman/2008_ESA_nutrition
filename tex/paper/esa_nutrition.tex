@@ -1,0 +1,280 @@
+\documentclass[12pt]{article}
+\linespread{1.5}
+\pdfminorversion=6
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage[flushleft]{threeparttable}
+\usepackage{threeparttablex}
+
+\usepackage[english]{babel}
+\usepackage{float,color}
+\usepackage[pdftex]{graphicx}
+\usepackage{hyperref}
+\usepackage{graphicx,scalerel}
+\hypersetup{colorlinks,linkcolor=black,urlcolor=blue,citecolor=black}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{placeins}
+\usepackage[format=hang,font=normalsize,labelfont=bf]{caption}
+\usepackage[margin=1in]{geometry}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{amsxtra}
+\usepackage{setspace}
+\usepackage{authblk}
+\usepackage{csquotes}
+
+% Bibliography stuff
+\usepackage[
+hyperref=true,
+giveninits=true, % render first and middle names as initials
+uniquename=init,
+maxcitenames=3,
+maxbibnames=99,
+style=authoryear,
+dashed=false, % re-print recurring author names in bibliography
+natbib=true,
+useprefix=true, % for inclusion of 'de' 'da' in surname
+urldate=long,
+backend=biber,
+style=apa]{biblatex}
+\addbibresource{bibliography.bib}
+
+
+% adds space above row
+\newcommand{\customlinespace}{\addlinespace[.1cm]}
+
+% command for all table/figure notes
+\newcommand{\Fignote}[1]{
+	\begin{tablenotes}[para,flushleft]\footnotesize
+		\textit{Note}: #1
+	\end{tablenotes}
+}
+
+% stars
+\newcommand{\sym}[1]{\rlap{#1}}
+
+% note addendem for fixed effects
+\newcommand{\FEnote}{All specifications include household and month fixed effects. }
+
+% note addendem for regression tables
+\newcommand{\Regnote}{Standard errors in parentheses are clustered at the zip code level. ***, **, and * indicate significance at the 1, 5, and 10 percent critical levels, respectively.}
+
+
+% Title page stuff
+\title{The Effect of the 2008 Economic Stimulus Payments on Nutrient Demand}
+\author{Zachary A. Goodman\thanks{zgoodman@ucsd.edu. I thank Jeffrey Clemens, Gordon Dahl, Melissa Famulari, Craig McIntosh, Katherine Meckel, and numerous seminar participants for their comments and suggestions. My analyses are calculated based in part on data from Nielsen Consumer LLC and marketing databases provided through the NielsenIQ Datasets at the Kilts Center for Marketing Data Center at The University of Chicago Booth School of Business. The conclusions drawn from the NielsenIQ data are those of my own and do not reflect the views of NielsenIQ. NielsenIQ is not responsible for, had no role in, and was not involved in analyzing and preparing the results reported herein.}}
+\affil{University of California, San Diego}
+\date{This version: May 2021}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+In this paper I examine the effects of receiving an economic stimulus payment (ESP) as part of the Economic Stimulus Act of 2008 on nutrient demand. I estimate this effect by exploiting the randomized timing of ESP receipt.
+\end{abstract}
+
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\doublespacing
+
+\section{Introduction} \label{introduction}
+
+The US spends about \$100 billion anually on programs designed to address food insecurity including the Supplemental Nutrition Assistance Program, Special Supplemental Nutrition Program for Women, Infants, and Children, and school meal programs. These programs serve tens of millions of Americans: one in four uses a program offered by the US Department of Agriculture (USDA) Food and Nutrition Service at least once in a year \parencite{usdafns}. Additionally, food insecurity and poor nutrition are often cited by politicians as justification for transfer programs. Moreover, what we eat and drink plays a large role in health outcomes including obesity, which costs taxpayers north of \$200 billion dollars annually \parencite{cawley2012medical}.
+
+Unconditional cash transfers (UCTs) have been proposed as ways to address poverty without spending resources on means testing \parencite{} or increase aggregate consumption helping reducing the duration of a recession \parencite{}. However, little is known how UCTs affect nutritional choices in developed countries. In this paper, I examine one such UCT, economic stimulus payments (ESPs) dispersed as part of the Economic Stimulus Act of 2008 (hereafter ESA), on demand for nutrients. These ESPs were sent to households starting May 2008 in an effort to increase spending and reduce the duration of the recession caused by the 2007 financial crisis. In total, over \$100 billion in ESPs were sent to 130 million taxpayers in 2008. Fortuitously, the IRS decided when each taxpayer would receive her ESP using the last two digits of her Social Security number, which is effectively random assigned.\footnote{Social Security applicants are assigned the last four digits of their Social Security numbers sequentially within their the geographic area and group, which determine the first seven digits of their number.} The random timing of the ESP allows for identification of causal effects, which other authors such as \textcite{broda2014economic} have exploited to estimate the impact of receiving an ESP on consumption. I use a similar approach to estimate the impact of receiving an ESP on demand for nutrients.
+
+To estimate this effect, I calculate household-level nutrient purchases over time using data from the Nielsen Consumer Panel (NCP), which provides household-level purchase data at the barcode level for about 60,000 households over several years. I merge these panel data with barcode-level Nutrition Facts data to observe quantities of each nutrient purchased per household over time. Finally, I observe when panelists receive their ESPs using a special survey constructed by \textcite{broda2014economic} answered by NCP panelists before and during the period of time that ESPs were distributed.
+
+I find that households increase purchases of...
+
+The remainder of the paper is organized as follows. Section \ref{background} provides a background of the policies enacted and related literature. Sections \ref{methods} and \ref{data} introduce the methods and data used, respectively. Section \ref{results} summarizes our results. Section \ref{discussion} discusses those results, and Section \ref{conclusion} concludes.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Background
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Background and Related Literature} \label{background}
+
+In this section, I review the policy studied as well as the literature on the effects of ESPs in the United States and the demand for nutritious foods.
+
+\subsection{Economic Stimulus Act of 2008} \label{2008esa}
+
+First I provide background on the Economic Stimulus Act of 2008. The ESA was signed into law by President George W. Bush on February 13, 2008, which promised to provide ESPs to taxpayers who filed a 2007 tax return. Each eligible taxpayer receieved between \$300 and \$600 if filing single or twice that amount if filing jointly, depending on tax liability in 2007 \parencite{house2008}. To be eligible for an ESP, one must have earned at least \$3,000 in income in 2007 and have a sufficiently low income. Adjusted gross income beyond a threshold of \$75,000 per qualifying adult phased out ESP benefits at a rate of 5\%. Additionally, each dependent child increased one's ESP by \$300. In total, the program disbursed about \$100 billion in payments to 130 million taxpayers \parencite{parker2013consumer}.
+
+Although signed into law in February, taxpayers did not begin to receive ESPs until May. For those taxpayers who provided direct deposit information, the IRS distributed electronic transfers of ESPs during a three-week period starting in late April. For the remaining taxpayers, the IRS mailed paper checks during a nine-week period starting in early May through July. In advance of sending the ESP, the IRS mailed recipients a notice that an ESP would be arriving soon. The week a taxpayer received her ESP was determined by the last two digits of her Social Security number, which as mentioned earlier is assigned as good as randomly. Hence, the \textit{timing} of receiving an ESP is random conditional on transfer method (electronic vs mail). It is important to note that the amount of the ESP is \textit{not} random, nor is whether or not one receives an ESP. Hence, identification of causal effects in this paper comes from comparing those who receive their ESP early to those who receive their ESP later, regardless of amount, conditional on transfer method.
+
+\subsection{Unconditional cash transfers in the United States}
+
+Here I review papers that examine causal effects of UCTs in the US \textcite{johnson2006household} use the quasi-random timing of tax rebate checks sent to households as part of the Economic Growth and Tax Relief Reconciliation Act of 2001 to estimate the effects of income shocks on consumption. Using a unique set of questions added to the Consumer Expenditure Survey after passage of the 2001 Tax Act, they observe when households receieve their payments. Similar to the ESPs distributed in 2008, the timing of payments in 2001 depended on one's SSN, and hence the timing of receipt is as good as randomly assigned. The authors find that households spent about two-thirds of their rebates over the six months following receipt on nondurable goods.
+
+\textcite{broda2014economic} conduct the survey of Neilsen Consumer Panel households that I use in this paper to observe if and when households receive their stimulus payments, how much they received, and some information about preferences and how the household intends to spend their payments. The authors find that households do not respond to news about the incoming payment but that aggregate spending rises by 10\% the week after the payment is received. Additionally, spending remains higher for the three months following receipt of the payment, and the response is greatest for households that report low liquid wealth and low income. In another paper, \textcite{parker2013consumer} add additional survey questions to the Consumer Expenditure Survey related to receipt of 2008 ESPs. The authors find that households spent between 50 - 90\% of the payments, with about a third of that spent on nondurable goods.
+
+\textcite{kaplan2014model} construct a model that can explain the smaller consumption response in 2008 vs 2001, which they detail in \textcite{kaplan2014tale}. The authors describe ``wealthy hand-to-mouth" households who hold large amount of wealth mostly as illiquid assets. These households display large marginal propensities to consume upon receiving a positive income shock but not upon receiving news of the shock, which runs counter to conventional hypotheses that uses a one-asset framework and ignore the liquidity of such an asset. The key theoretical takeaway that I examine in this work is that liquidity constrained households, even those with significant savings, may experience consumption changes upon receiving an ESP.
+
+\subsection{Demand for nutrients}
+
+Here I review empirical work on demand for ``healthy" (non-sugar carbohydrates, fiber, unsaturated fats) and ``unhealthy" nutrients (saturated fats, sugar, sodium).\footnote{\textit{Healthy} in this context is guided by recommendations from US government agencies, such as the USDA's \textit{Dietary Guidelines for Americans} \citeyear{usda2021}, which are guided by current average levels of nutrient consumption in the US.}. \textcite{allcott2019food} examine whether entrance of a supermarket to a ``food desert" reduces nutritional inequality between wealthy and poorer households. The authors find that entrance of a new store does not significantly reduce nutritional inequality, which follows from the observation that households travel far to purchase groceries. A closer proximity store simply changes where the households make their purchases and modestly helps households through decreased transit costs and increased variety. The authors also find that moving to a healthier neighborhood does not make a large dent in nutritional inequality over several years following the move. Finally, the authors report that providing poorer households with the same prices available to higher income households would reduce nutritional inequality by at most 10\% while the remaining 90\% is driven by differences in demand. They suggest subsidizing healthy groceries, at a cost of 15\% of the budget for SNAP, to eliminate nutritional inequality.
+
+Other authors have provided alternative explanations for preferences for nutritous foods. \textcite{hut2020determinants} finds that migrants are mostly unaffected by local differences in demand for nutritious foods shortly after moving, but within three to four decades, about half of the difference in healthfulness is closed. \textcite{harding2017effect} use structural modeling to estimate the impact of nutrient-specific taxes on demand, which they estimate using data from the NCP. They find that a 20\% tax on fat, sugar, and salt reduces demand for that nutrient by 30.25\%, 16.41\%, and 10.03\%, respectively, all of which are more effective than are taxes on product classes (like sugar-sweetened beverages). \textcite{griffith2017importance} report that decreased salt intake observed in the UK is due to firms reformulating products and not because of consumers choosing products with less salt.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Data
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Data} \label{data}
+
+I identify the causal effects of UCTs on nutrient demand using several data sources. I start with data from the Nielsen Homescan Survey, a nationally-representative panel that allows me to observe household-level food purchases and demographic data for about 60,000 households in 2008. Households in the panel are provided a barcode scanner by Nielsen, who asks households to scan all items purchased. To incentivize households to scan items, Nielsen offers a rewards catalog, which provides panelists higher value rewards the longer they remain in the sample.\footnote{The median household stays in the sample for about seven years.}
+
+When scanning barcodes, Nielsen panelists are asked to provide information about the store where the product was purchased and the price of the item. Prices are automatically recorded for products purchased at a Nielsen partner retail outlet as the average price during the week the panelist purchased the product. Panelists are asked to manually input the price of products made at non-partner retail outlets. For barcodeless products like some produce and bakery items, Nielsen provides a reference booklet with barcodes associated with a photo and description of a product.\footnote{``Reference card goods'' are underreported in the Nielsen data, and Nielsen provides sampling weights for researchers who choose to include reference card goods in their analysis that upweight households that scan reference card items.} In practice, households may choose to omit reporting certain purchases or forget to scan and do not report all purchases \parencite{einav2010recording}. Hence I report coefficient estimates as percent changes. Provided the degree of underreporting in the homescan data is not correlated with ESP timing, the treatment effect estimates should not be biased by this measurement error of all purchases.
+
+To observe nutrition information, I match the UPC codes associated with each Nielsen product with barcode-level nutrition data. I then collapse these data to observe total quantities of each nutrient purchased per household per week. The nutrition information come from three sources. The first source is from Syndigo, who license their nutrition dataset covering over 220,000 products containing information from the Nutrition Facts panel, ingredients list, and general product attributes like brand, size, and description.\footnote{Over 2,000 consumer applications have licensed these data, as have other researchers such as \textcite{dubois2014prices} who also match these data to Nielsen products.} The second source is the US Department of Agriculture's FoodData Central, which provides product-specific nutrient information. The final source is from images of products provided by major online retailers, from which I hand-record nutrition information from pictures of the Nutrition Facts panel.
+
+I follow an imputation process similar to that of \textcite{dubois2014prices} to label each purchased product with nutrient information. I begin by dropping non-food products, alcohol, tobacco, weight-loss/diet aids, and reference card goods.\footnote{Reference card goods do not have barcodes and are generally underreported by panelists. Additionally, they are reported as \textit{counts} as opposed to weights, thereby making it difficult to label these products with correct nutrition information.} % As a robustness check we examine whether RC purchases change as a function of the tax.
+I then match Nielsen products to Syndigo nutrients, covering about 62.7\% of purchased products. I next match products without a direct match to those that share the same product description, brand, product module,\footnote{Nielsen defines over 1,000 product categories called \textit{product modules}.}, size type,\footnote{``Size type'' is whether the product is measured in counts versus volume versus weight, which is generally (but not always) consistent within product module.} flavor, variety, type, formula, and style, which adds 22.2\% to the matched data. After that, I allow matches across brands, including storebrand goods, which do not have matches in the Syndigo data. This step matches 8.5\% of purchased products. The next step relaxes the flavor, variety, type, formula, and style restrictions, labeling 4.3\% of products. I then impute with product module for ones that have sufficient labeled observations, which covers 2.1\% of products. Finally, I manually label the remaining 0.3\% of products using the USDA and online retailer data sources. After aggregating to the household-week level, I topcode each nutrient measure at the 99th percentile for all values greater than the 99th percentile to reduce the influence of outliers.  %TODO citation of another paper that does this
+
+Finally, I use the survey constructed by \textcite{broda2014economic} to observe when panelists received their ESPs. The survey was sent to all NCP households who met Nielsen's reporting requirement, who were offered rewards points to answer. The instructions asked that the survey be answered by ``the adult most knowledgeable about your household's income tax returns". The first wave of the survey asked households for details about whether they had received a payment or if not, when they expected to receive a payment, if any. Subsequent waves followed up with households that had not yet received a payment but expected to in the future or were not sure if they would receive a payment. For households who reported receiving a payment, the survey asked for the amount and date the ESP was receieved as well as how the respondents' household anticipated spending or saving the money. The survey also asked all respondents a series of questions related to liquidity and savings. For a detailed description of the survey questions and timing, see the Appendix of \textcite{broda2014economic}.
+
+Of the approximately 60,000 households receiving the survey, 80\% responded, providing a pre-trimmed sample of 48,409. By necessity, I drop all households who do not report receiving an ESP, a nonzero amount, or a date of receipt, which removes about 20\% of respondents. Additionally, I follow \textcite{broda2014economic} in dropping households who report obviously wrong or inconsistent information. Specifically, I drop households who report receiving an ESP before ESPs of their type were distributed, those who report receiving an ESP at a date prior to an earlier survey wave in which they reported not receiving an ESP, and those who report receiving an ESP in a future date after the survey's timestamp. I also drop households who receive their ESPs later than the IRS-published disbursement schedules, which is possible but not random which households received their ESPs late. Clearly the sample remaining is not randomly selected, but the timing of receipt for this sample is random conditional on receipt type and hence treatment effects are not biased by selection. I present descriptive statistics of the selected sample in Table \ref{table_desc}, which may be helpful for deciding whether the results may generalize to other populations.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Methods
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Methods} \label{methods}
+
+In this section, I describe the empirical strategies used in this paper.
+
+\subsection{Effect on payment on nutrient demand}
+
+I use a stacked event study design to estimate the impact of receiving an ESP on purchases. The primary specification is as follows:
+
+\begin{align}
+	y_{it} = \text{ESP}_{i(t)} + \alpha_i + \gamma_t + \epsilon_{it} \label{spec_es}
+\end{align}
+
+where $y_{it}$ is the total purchases of a food or nutrient $y$ by household $i$ during week $t$, $\alpha_i$ is a household fixed effect, $\gamma_t$ are week fixed effects, and $\epsilon_{it}$ is an unobserved error term. $\text{ESP}_{i(t)}$ is a set of indicators for week since the household received its ESP, and I omit the week prior to when the household receives its check such that all coefficients are relative to that week. Identification of the indicator dummies comes from timing of the ESPs, which is assigned as-good-as random conditional on ESP type (paper check or direct deposit) and receiving the payment when expected, as described in detail in Section \ref{2008esa}. Under unconfoundedness and SUTVA, the coefficients $\text{ESP}_{i(t)}$ for $i(t) \geq 0$ identify the average causal effect of receiving an ESP on purchases of $y$. I use the inverse hyperbolic sine of levels of $y$ such that the coefficients can be interpreted as percent changes.
+
+In this setting, the \textit{timing} of treatment is randomly assigned, and treated units remain ``treated" for all following periods. \textcite{athey2021design} show that causal effects in such a ``staggered adoption design" can be estimated using the standard differences-in-differences (DID) estimator and intepreted as a weighted average of the average effect of changing the adoption date. The authors also prove that the clustered boostrap provides a conservative estimate of the variance of the coefficients of interest. Other authors have recently proposed methods for reducing potential bias in staggered adoption settings when using two-way fixed effect estimators \parencite{callaway2020difference, goodman2018difference, de2020two, sun2020estimating}. However, since the random adoption date assumption is reasonable in the present setting, and since treatment effect heterogeneity as a function of treatment date is unlikely, the conventional DID estimator is appropriate. However, as a robustness check I estimate causal effects of ESP receipt on nutrient demand using the methods described in TODO and find no substantive differences.
+
+\subsection{Heterogeneity}
+
+According to the Permanent Income Hypothesis, those with sufficient liquidity should not change their nutrient purchases dramatically upon receiving an ESP. To examine heterogeneous treatment effects of the ESP, I adjust \ref{spec_es} to include an interaction term:
+
+\begin{align}
+	y_{it} = \text{ESP}_{i(t)} + \beta \text{I}_{i} * \text{ESP}_{i(t)} + \alpha_i + \gamma_t + \epsilon_{it} \label{spec_het}
+\end{align}
+
+where $\text{I}_{i}$ is an indicator equal to 1 when a household has a time-invariant characteristic of interest, such as having at least two months of income saved in liquid assets. Note that time-invariant, in this setting, requires that the characteristic be constant during the periods studied, which is assumed to be true for all Nielsen-provided demographic information, which is updated anually.
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Results
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Results} \label{results}
+
+In this section I present results using the methodology discussed in Section \ref{methods} estimated using data described in Section \ref{data}.
+
+\subsection{Balance check}
+
+I begin by examining whether I can predict household-level demographic information using timing of the household's ESP. Doing so would suggest that the timing of the ESP was not random.
+
+
+\subsection{Effect on panelist behaviors}
+
+I next estimate the effects of receiving an ESP on panelist behaviors, such as number of trips taken, items scanned, and total amount spent using equation \ref{spec_es}.
+
+
+\subsection{Effect on nutrient demand}
+
+Next I examine the effects of receiving an ESP on nutrients purchased.
+
+
+\subsection{Treatment effect heterogeneity}
+
+Here I investigate heterogeneous treatment effect estimates along household characteristic dimensions.
+
+I start by estimating Equation \ref{spec_het} using as outcomes the inverse hyperbolic sine of grams of sugar and ounces of regular soda purchased. For the interaction terms, I use dummies for
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Discussion
+%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion} \label{discussion}
+
+%We find that TODO.
+
+% Robustness Checks TODO
+
+\subsection{Limitations}
+
+The methods used in this paper have some limitations. First, I rely on panelists' reported ESP receipt date, which may contain measurement error and bias the coefficients towards zero. Second, the results are specific to the time period studied, namely the beginning of the worst economic recession in recent history. It is possible that the results may look very different if, for example, payments were made during an expansionary period. Third, the estimates are specific to a one-time transfer. Further research is warranted for estimating the impact of repeat transfers on household nutrition, which would help policymakers predict nutrition-related health impacts of transfer programs like UBI.
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% conclusion
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusion} \label{conclusion}
+
+Economic stimulus payments and other forms of unconditional cash transfers are increasingly being used in developed countries to transfer income without causing distortionary behaviors or incurring loss from means-testing. Additionally, ESPs can be deployed quickly to reverse contractionary economic periods. Despite their prevalence, little is known about how ESPs affect nutritional choices, which is troubling given the large public investment in programs that assist nutritional choices and costs incurred by nutrition-related health complications. In this paper I find that the ESPs distributed as part of the Economic Stimulus Act of 2008 caused recipient households to increase purchases of food by XX\%. The additional food was not representative of pre-ESP nutrient bundles: households purchased much more XX.
+
+\clearpage
+\printbibliography
+
+%%% TABLES
+
+\singlespacing
+
+% \clearpage
+% \input{../tables/itt_cook_nutrients.tex}
+
+%%% FIGURES
+
+% Cook Co: nutrient coef plots
+% \clearpage
+% \begin{figure}[t]
+% \begin{center}
+% \caption{Effects of Cook County tax on nutrients purchased}
+% \label{cook_coef_combo}
+% \includegraphics[width=1\textwidth, angle=0]{../figures/coefplot_cook_combo.pdf}
+% \footnotesize Each panel displays the monthly differences in log quantities purchased by residents of Cook County, Illinois and those in the same DMA outside of the county limits. The regressions used include household and month fixed-effects, and errors are clustered and the zip-code level. Vertical dashed lines represent the start and end of the tax in Cook County.
+% \end{center}
+% \end{figure}
+
+
+% *****************************************************************
+% Appendix
+% *****************************************************************
+\clearpage
+\section*{Appendix}
+
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\setcounter{table}{0}
+\renewcommand{\thetable}{A\arabic{table}}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{A\arabic{figure}}
+
+%%% TABLES
+
+% \input{../tables/summary_deciles.tex}
+
+% \clearpage
+% \input{../tables/sodatilesozcook.tex}
+
+
+%%% FIGURES
+
+% Cook Co: Panelist nutrition
+% \clearpage
+% \begin{figure}[t]
+% \begin{center}
+% \caption{Cook County DMA: nutrient composition over time}
+% \label{cook_panelist_nutr}
+% \includegraphics[width=1\textwidth, angle=0]{../figures/panelist_nutr.pdf}
+% \footnotesize Each panel displays monthly sums or percentages of different nutrients for residents of Cook County, Illinois (red) and those in the same DMA outside of the county limits (blue). Vertical dashed lines represent the start and end of the tax in Cook County.
+% \end{center}
+% \end{figure}
+
+\end{document}
