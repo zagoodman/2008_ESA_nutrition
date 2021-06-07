@@ -57,10 +57,10 @@ style=apa]{biblatex}
 \newcommand{\sym}[1]{\rlap{#1}}
 
 % note addendem for fixed effects
-\newcommand{\FEnote}{All specifications include household and month fixed effects. }
+\newcommand{\FEnote}{All specifications include household and calendar-week-by-method-of-payment fixed effects. }
 
 % note addendem for regression tables
-\newcommand{\Regnote}{Standard errors in parentheses are clustered at the zip code level. ***, **, and * indicate significance at the 1, 5, and 10 percent critical levels, respectively.}
+\newcommand{\Regnote}{Standard errors in parentheses are clustered at household level. ***, **, and * indicate significance at the 1, 5, and 10 percent critical levels, respectively.}
 
 
 % Title page stuff
@@ -120,7 +120,7 @@ Here I review papers that examine causal effects of UCTs in the US \textcite{joh
 
 Here I review empirical work on demand for ``healthy" (non-sugar carbohydrates, fiber, unsaturated fats) and ``unhealthy" nutrients (saturated fats, sugar, sodium).\footnote{\textit{Healthy} in this context is guided by recommendations from US government agencies, such as the USDA's \textit{Dietary Guidelines for Americans} \citeyear{usda2021}, which are guided by current average levels of nutrient consumption in the US.}. \textcite{allcott2019food} examine whether entrance of a supermarket to a ``food desert" reduces nutritional inequality between wealthy and poorer households. The authors find that entrance of a new store does not significantly reduce nutritional inequality, which follows from the observation that households travel far to purchase groceries. A closer proximity store simply changes where the households make their purchases and modestly helps households through decreased transit costs and increased variety. The authors also find that moving to a healthier neighborhood does not make a large dent in nutritional inequality over several years following the move. Finally, the authors report that providing poorer households with the same prices available to higher income households would reduce nutritional inequality by at most 10\% while the remaining 90\% is driven by differences in demand. They suggest subsidizing healthy groceries, at a cost of 15\% of the budget for SNAP, to eliminate nutritional inequality.
 
-Other authors have provided alternative explanations for preferences for nutritous foods. \textcite{hut2020determinants} finds that migrants are mostly unaffected by local differences in demand for nutritious foods shortly after moving, but within three to four decades, about half of the difference in healthfulness is closed. \textcite{harding2017effect} use structural modeling to estimate the impact of nutrient-specific taxes on demand, which they estimate using data from the NCP. They find that a 20\% tax on fat, sugar, and salt reduces demand for that nutrient by 30.25\%, 16.41\%, and 10.03\%, respectively, all of which are more effective than are taxes on product classes (like sugar-sweetened beverages). \textcite{griffith2017importance} report that decreased salt intake observed in the UK is due to firms reformulating products and not because of consumers choosing products with less salt.
+Other authors have provided alternative explanations for preferences for nutritous foods. \textcite{hut2020determinants} finds that migrants are mostly unaffected by local differences in demand for nutritious foods shortly after moving, but within three to four decades, about half of the difference in healthfulness is closed. \textcite{harding2017effect} use structural modeling to estimate the impact of nutrient-specific taxes on demand, which they estimate using data from the NCP. They find that a 20\% tax on fat, sugar, and salt reduces demand for that nutrient by 30.25\%, 16.41\%, and 10.03\%, respectively, all of which are more effective than are taxes on product classes (like sugar-sweetened beverages). \textcite{griffith2017importance} report that decreased salt intake observed in the UK is due to firms reformulating products and not because of consumers choosing products with less salt. In a recent paper, \textcite{harris2020online} finds that the introduction of an online shopping service modestly reduces the share of budget spent on sweets and candies but no evidence of improvement across other measures of healthfulness.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Data
@@ -156,9 +156,9 @@ I use a stacked event study design to estimate the impact of receiving an ESP on
 	y_{it} = \text{ESP}_{i(t)} + \alpha_i + \gamma_t + \epsilon_{it} \label{spec_es}
 \end{align}
 
-where $y_{it}$ is the total purchases of a food or nutrient $y$ by household $i$ during week $t$, $\alpha_i$ is a household fixed effect, $\gamma_t$ are week fixed effects, and $\epsilon_{it}$ is an unobserved error term. $\text{ESP}_{i(t)}$ is a set of indicators for week since the household received its ESP, and I omit the week prior to when the household receives its check such that all coefficients are relative to that week. Identification of the indicator dummies comes from timing of the ESPs, which is assigned as-good-as random conditional on ESP type (paper check or direct deposit) and receiving the payment when expected, as described in detail in Section \ref{2008esa}. Under unconfoundedness and SUTVA, the coefficients $\text{ESP}_{i(t)}$ for $i(t) \geq 0$ identify the average causal effect of receiving an ESP on purchases of $y$. I use the inverse hyperbolic sine of levels of $y$ such that the coefficients can be interpreted as percent changes.
+where $y_{it}$ is the total purchases of a food or nutrient $y$ by household $i$ during week $t$, $\alpha_i$ is a household fixed effect, $\gamma_t$ are week fixed effects, and $\epsilon_{it}$ is an unobserved error term. $\text{ESP}_{i(t)}$ is a set of indicators for week since the household received its ESP, and I omit the week two weeks prior to when the household receives its check such that all coefficients are relative to that week.\footnote{I omit two weeks instead of the week immediately prior to allow for anticipatory effects.} I additionally drop a second relative-week indicator far in advance of treatment, which is required to avoid multicollinearity as discussed in \textcite{borusyak2017revisiting}.\footnote{Doing so implicitly assumes the coefficient is zero, which is reasonable if there are no pretreatment trends. Another option is to not include household fixed effects.} Identification of the indicator dummies comes from timing of the ESPs, which is assigned as-good-as random conditional on ESP type (paper check or direct deposit) and receiving the payment when expected, as described in detail in Section \ref{2008esa}. As such, I interact $\gamma_t$ by method of payment indicators as well as estimate my primary specifications restricting the sample to only those who receive their ESP by the same method. Under unconfoundedness and SUTVA, the coefficients $\text{ESP}_{i(t)}$ for $i(t) \geq 0$ identify the (weighted) average treatment effect on the treated (ATT) of receiving an ESP on purchases of $y$ after $t$ weeks. I use the inverse hyperbolic sine of levels of $y$ such that the coefficients can be interpreted as percent changes. When reporting the average effect over the first month after receipt, I average
 
-In this setting, the \textit{timing} of treatment is randomly assigned, and treated units remain ``treated" for all following periods. \textcite{athey2021design} show that causal effects in such a ``staggered adoption design" can be estimated using the standard differences-in-differences (DID) estimator and intepreted as a weighted average of the average effect of changing the adoption date. The authors also prove that the clustered boostrap provides a conservative estimate of the variance of the coefficients of interest. Other authors have recently proposed methods for reducing potential bias in staggered adoption settings when using two-way fixed effect estimators \parencite{callaway2020difference, goodman2018difference, de2020two, sun2020estimating}. However, since the random adoption date assumption is reasonable in the present setting, and since treatment effect heterogeneity as a function of treatment date is unlikely, the conventional DID estimator is appropriate. However, as a robustness check I estimate causal effects of ESP receipt on nutrient demand using the methods described in TODO and find no substantive differences.
+In this setting, the \textit{timing} of treatment is randomly assigned, and treated units remain ``treated" for all following periods. \textcite{athey2021design} show that causal effects in such a ``staggered adoption design" can be estimated using the standard differences-in-differences (DID) estimator and intepreted as a weighted average of the average effect of changing the adoption date. The authors also prove that the clustered boostrap provides a conservative estimate of the variance of the coefficients of interest. \textcite{sun2020estimating} examine the event-study specification, which I use in this paper, and demonstate that, even in settings where all units are treated, treatment effect estimates remain unbiased provided that the pattern of treatment effect does not change over time. I follow the guidance of that work as well as the principles shared in other recent papers \parencite{goodman2018difference, callaway2020difference, de2020two} when performing robustness checks. Of note, I do not include relative-time dummies beyond the last period for which I have at least one untreated group (set of households who have not yet received their impending ESPs). This limits my post-treatment observation period to 12 weeks with the full sample, 9 weeks with the paper-check sample, and 4 weeks with the direct deposit sample.
 
 \subsection{Heterogeneity}
 
@@ -168,7 +168,7 @@ According to the Permanent Income Hypothesis, those with sufficient liquidity sh
 	y_{it} = \text{ESP}_{i(t)} + \beta \text{I}_{i} * \text{ESP}_{i(t)} + \alpha_i + \gamma_t + \epsilon_{it} \label{spec_het}
 \end{align}
 
-where $\text{I}_{i}$ is an indicator equal to 1 when a household has a time-invariant characteristic of interest, such as having at least two months of income saved in liquid assets. Note that time-invariant, in this setting, requires that the characteristic be constant during the periods studied, which is assumed to be true for all Nielsen-provided demographic information, which is updated anually.
+where $\text{I}_{i}$ is an indicator equal to 1 when a household has a time-invariant characteristic of interest, such as having at least two months of income saved in liquid assets. Note that time-invariant, in this setting, requires that the characteristic be constant during the periods studied, which is assumed to be true for all (anually-updated) Nielsen-provided demographic information.
 
 %%%%%%%%%%%%%%%%%%%%%%%
 % Results
@@ -178,14 +178,10 @@ where $\text{I}_{i}$ is an indicator equal to 1 when a household has a time-inva
 
 In this section I present results using the methodology discussed in Section \ref{methods} estimated using data described in Section \ref{data}.
 
-\subsection{Balance check}
-
-I begin by examining whether I can predict household-level demographic information using timing of the household's ESP. Doing so would suggest that the timing of the ESP was not random.
-
-
 \subsection{Effect on panelist behaviors}
 
 I next estimate the effects of receiving an ESP on panelist behaviors, such as number of trips taken, items scanned, and total amount spent using equation \ref{spec_es}.
+
 
 
 \subsection{Effect on nutrient demand}
@@ -228,7 +224,7 @@ Economic stimulus payments and other forms of unconditional cash transfers are i
 \singlespacing
 
 % \clearpage
-% \input{../tables/itt_cook_nutrients.tex}
+\input{../tables/week_behaviors.tex}
 
 %%% FIGURES
 
@@ -258,7 +254,7 @@ Economic stimulus payments and other forms of unconditional cash transfers are i
 
 %%% TABLES
 
-% \input{../tables/summary_deciles.tex}
+% \input{../tables/week_behaviors.tex}
 
 % \clearpage
 % \input{../tables/sodatilesozcook.tex}
@@ -266,15 +262,26 @@ Economic stimulus payments and other forms of unconditional cash transfers are i
 
 %%% FIGURES
 
-% Cook Co: Panelist nutrition
-% \clearpage
-% \begin{figure}[t]
-% \begin{center}
-% \caption{Cook County DMA: nutrient composition over time}
-% \label{cook_panelist_nutr}
-% \includegraphics[width=1\textwidth, angle=0]{../figures/panelist_nutr.pdf}
-% \footnotesize Each panel displays monthly sums or percentages of different nutrients for residents of Cook County, Illinois (red) and those in the same DMA outside of the county limits (blue). Vertical dashed lines represent the start and end of the tax in Cook County.
-% \end{center}
-% \end{figure}
+% Raw behavior data, weekly
+\clearpage
+\begin{figure}[t]
+\begin{center}
+\caption{Nutrient purchases over time by liquidity constraints}
+\label{graph_raw_behaviors}
+\includegraphics[width=1\textwidth, angle=0]{../figures/raw_behaviors_week.pdf}
+\footnotesize Each panel displays weekly sums of different panelist behaviors averaged across panelists in the sample by whether they have at least two months of income in liquid assets. Orange (generally top) line is liquidity-constrained households, green (generally bottom) line is those with liquidity. Averages are weighted by panelist projection factors provided by Nielsen.
+\end{center}
+\end{figure}
+
+% Raw nutrient data, weekly
+\clearpage
+\begin{figure}[t]
+\begin{center}
+\caption{Nutrient purchases over time by liquidity constraints}
+\label{graph_raw_nutrients}
+\includegraphics[width=1\textwidth, angle=0]{../figures/raw_nutrients_week.pdf}
+\footnotesize Each panel displays weekly sums of different nutrients averaged across panelists in the sample by whether they have at least two months of income in liquid assets. Orange (top) line is liquidity-constrained households, green (bottom) line is those with liquidity. Averages are weighted by panelist projection factors provided by Nielsen.
+\end{center}
+\end{figure}
 
 \end{document}
