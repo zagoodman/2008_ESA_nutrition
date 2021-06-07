@@ -228,7 +228,7 @@ Additionally, I follow \textcite{broda2014economic} in dropping households who r
 Specifically, I drop households who report receiving an ESP before ESPs of their type were distributed, those who report receiving an ESP at a date prior to an earlier survey wave in which they reported not receiving an ESP, and those who report receiving an ESP in a future date after the survey's timestamp.
 I also drop households who receive their ESPs later than the IRS-published disbursement schedules, which is possible but not random which households received their ESPs late.
 Clearly the sample remaining is not randomly selected, but the timing of receipt for this sample is random conditional on receipt type and hence treatment effects are not biased by selection.
-I present descriptive statistics of the selected sample in Table \ref{table_desc}, which may be helpful for deciding whether the results may generalize to other populations.
+I present descriptive statistics of the selected sample in Tables \ref{table_summary_cat} and \ref{table_summary_num}, which may be helpful for deciding whether the results may generalize to other populations.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Methods
@@ -269,11 +269,12 @@ According to the Permanent Income Hypothesis, those with sufficient liquidity sh
 To examine heterogeneous treatment effects of the ESP, I adjust \ref{spec_es} to include an interaction term:
 
 \begin{align}
-	y_{it} = \text{ESP}_{i(t)} + \beta \text{I}_{i} * \text{ESP}_{i(t)} + \alpha_i + \gamma_t + \epsilon_{it} \label{spec_het}
+	y_{it} = \text{ESP}_{i(t)} + \beta_t \text{I}_{i} * \text{ESP}_{i(t)} + \alpha_i + \gamma_t + \epsilon_{it} \label{spec_het}
 \end{align}
 
 where $\text{I}_{i}$ is an indicator equal to 1 when a household has a time-invariant characteristic of interest, such as having at least two months of income saved in liquid assets.
 Note that time-invariant, in this setting, requires that the characteristic be constant during the periods studied, which is assumed to be true for all (anually-updated) Nielsen-provided demographic information.
+$\beta_t$, the parameter of interest in this specification, is the average difference in the outcome variable during week $t$ for household who have the time-invariant characteristic of interest.
 
 %%%%%%%%%%%%%%%%%%%%%%%
 % Results
@@ -339,22 +340,54 @@ The additional food was not representative of pre-ESP nutrient bundles: househol
 \singlespacing
 
 % \clearpage
-\input{../tables/week_behaviors.tex}
+\input{../tables/summary_cat.tex}
+
+\clearpage
+\input{../tables/summary_num.tex}
+
+\clearpage
+\input{../tables/behaviors_all.tex}
+
+\clearpage
+\input{../tables/nutrients_all.tex}
+
+\clearpage
+\input{../tables/behaviors_inter.tex}
+
+\clearpage
+\input{../tables/nutrients_inter.tex}
 
 %%% FIGURES
 
-% Cook Co: nutrient coef plots
-% \clearpage
-% \begin{figure}[t]
-% \begin{center}
-% \caption{Effects of Cook County tax on nutrients purchased}
-% \label{cook_coef_combo}
-% \includegraphics[width=1\textwidth, angle=0]{../figures/coefplot_cook_combo.pdf}
-% \footnotesize Each panel displays the monthly differences in log quantities purchased by residents of Cook County, Illinois and those in the same DMA outside of the county limits.
-% The regressions used include household and month fixed-effects, and errors are clustered and the zip-code level.
-% Vertical dashed lines represent the start and end of the tax in Cook County.
-% \end{center}
-% \end{figure}
+% behaviors
+\clearpage
+\begin{figure}[t]
+\begin{center}
+\caption{Effects of ESP receipt on shopping behaviors}
+\label{es_behaviors_all}
+\includegraphics[width=1\textwidth, angle=0]{../figures/es_behaviors_all.pdf}
+\footnotesize Each panel displays the weekly percent differences for the given outcome variable fit using Equation \ref{spec_es}. The regressions used include household and week-by-method-of-receipt fixed effects. Errors are clustered at the household level. \end{center}
+\end{figure}
+
+% nutrients
+\clearpage
+\begin{figure}[t]
+\begin{center}
+\caption{Effects of ESP receipt on nutrient purchases}
+\label{es_nutrients_all}
+\includegraphics[width=1\textwidth, angle=0]{../figures/es_nutrients_all.pdf}
+\footnotesize Each panel displays the weekly percent differences for the given outcome variable fit using Equation \ref{spec_es}. The regressions used include household and week-by-method-of-receipt fixed effects. Errors are clustered at the household level. \end{center}
+\end{figure}
+
+% interaction
+\clearpage
+\begin{figure}[t]
+\begin{center}
+\caption{Difference in effects of ESP receipt for low liquidity households}
+\label{es_interaction}
+\includegraphics[width=1\textwidth, angle=0]{../figures/es_interaction.pdf}
+\footnotesize Each panel displays $\beta_t$ from Equation \ref{spec_het}. The regressions used include household and week-by-method-of-receipt fixed effects. Errors are clustered at the household level. \end{center}
+\end{figure}
 
 
 % *****************************************************************
