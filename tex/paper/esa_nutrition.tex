@@ -71,14 +71,13 @@ My analyses are calculated based in part on data from Nielsen Consumer LLC and m
 The conclusions drawn from the NielsenIQ data are those of my own and do not reflect the views of NielsenIQ.
 NielsenIQ is not responsible for, had no role in, and was not involved in analyzing and preparing the results reported herein.}}
 \affil{University of California, San Diego}
-\date{This version: May 2021}
+\date{This version: June 2021}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-In this paper I examine the effects of receiving an economic stimulus payment (ESP) as part of the Economic Stimulus Act of 2008 on nutrient demand.
-I estimate this effect by exploiting the randomized timing of ESP receipt.
+In this paper I examine the effects of receiving an economic stimulus payment (ESP) as part of the Economic Stimulus Act of 2008 on demand for nutrients. The ESPs, averaging about \$900, were distributed at quasi-random intervals over a 12-week time span depending on the last two digits of each taxpayer's Social Security number. I combine Nielsen Consumer Panel scanner data with UPC-level Nutrition Facts data and survey data that allows me to observe when NCP panelists receieved their ESPs and how much of each nutrient the household purchased over time. I find no evidence of changes in purchases by households with liquid savings. Liquidity constrained households, on the other hand, experience large increases in purchases of all nutrients, but particuarly those considered unhealthful at current average levels by the USDA. The findings suggest that one-time transfers are unlikely to improve healthfulness of nutrient bundles purchased. More research is warranted to examine the effects of repeated transfers on nutrient demand.
 \end{abstract}
 
 \pagebreak
@@ -95,7 +94,7 @@ These programs serve tens of millions of Americans: one in four uses a program o
 Additionally, food insecurity and poor nutrition are often cited by politicians as justification for transfer programs.
 Moreover, what we eat and drink plays a large role in health outcomes including obesity, which costs taxpayers north of \$200 billion dollars annually \parencite{cawley2012medical}.
 
-Unconditional cash transfers (UCTs) have been proposed as ways to address poverty without spending resources on means testing \parencite{} or increase aggregate consumption helping reducing the duration of a recession \parencite{}.
+Unconditional cash transfers (UCTs) have been proposed as ways to address poverty without spending resources on means testing \parencite{hanna2018universal} or increase aggregate consumption thereby helping reducing the duration of a recession \parencite{broda2014economic}.
 However, little is known how UCTs affect nutritional choices in developed countries.
 In this paper, I examine one such UCT, economic stimulus payments (ESPs) dispersed as part of the Economic Stimulus Act of 2008 (hereafter ESA), on demand for nutrients.
 These ESPs were sent to households starting May 2008 in an effort to increase spending and reduce the duration of the recession caused by the 2007 financial crisis.
@@ -107,13 +106,18 @@ To estimate this effect, I calculate household-level nutrient purchases over tim
 I merge these panel data with barcode-level Nutrition Facts data to observe quantities of each nutrient purchased per household over time.
 Finally, I observe when panelists receive their ESPs using a special survey constructed by \textcite{broda2014economic} answered by NCP panelists before and during the period of time that ESPs were distributed.
 
-I find that households increase purchases of...
+I find that during the concurrent week the ESP is received, households increase total spending by 6\% and only increase spending on food by a modest, statistically insignificant amount.
+However, households that do not have at least two months of income as liquid assets see large, significant effects on purchases of food.
+These households increase their purchases of all nutrients, but the effects are heterogeneous.
+Notably, carbohydrates and sugar increase more than other nutrients while protein and fiber increase the least.
+These findings are consistent with the Permanent Income Hypothesis and the "wealthy hand-to-mouth" theory of \textcite{kaplan2014model}.
+Additionally, these findings suggest that one-time, large income shocks are unlikely to improve nutritional quality, at least for populations similar to the sample studied, or perhaps developed countries more broadly.
 
 The remainder of the paper is organized as follows.
 Section \ref{background} provides a background of the policies enacted and related literature.
 Sections \ref{methods} and \ref{data} introduce the methods and data used, respectively.
 Section \ref{results} summarizes our results.
-Section \ref{discussion} discusses those results, and Section \ref{conclusion} concludes.
+Section \ref{discussion} discusses those results and concludes.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Background
@@ -222,13 +226,27 @@ For households who reported receiving a payment, the survey asked for the amount
 The survey also asked all respondents a series of questions related to liquidity and savings.
 For a detailed description of the survey questions and timing, see the Appendix of \textcite{broda2014economic}.
 
-Of the approximately 60,000 households receiving the survey, 80\% responded, providing a pre-trimmed sample of 48,409.
-By necessity, I drop all households who do not report receiving an ESP, a nonzero amount, or a date of receipt, which removes about 20\% of respondents.
+Of the approximately 60,000 households receiving the survey, 80\% responded, providing a pre-trimmed sample of about 48,000.
+By necessity, I drop all households who report not receiving an ESP or omit a date of receipt, which removes about 20\% of respondents.
 Additionally, I follow \textcite{broda2014economic} in dropping households who report obviously wrong or inconsistent information.
 Specifically, I drop households who report receiving an ESP before ESPs of their type were distributed, those who report receiving an ESP at a date prior to an earlier survey wave in which they reported not receiving an ESP, and those who report receiving an ESP in a future date after the survey's timestamp.
 I also drop households who receive their ESPs later than the IRS-published disbursement schedules, which is possible but not random which households received their ESPs late.
-Clearly the sample remaining is not randomly selected, but the timing of receipt for this sample is random conditional on receipt type and hence treatment effects are not biased by selection.
-I present descriptive statistics of the selected sample in Tables \ref{table_summary_cat} and \ref{table_summary_num}, which may be helpful for deciding whether the results may generalize to other populations.
+Finally, I drop households who do not make purchases both before and after receipt of their ESP, which is necessary to include household fixed effects.
+Very few households did not report purchases both before and after receipt, so this step likely has minimal impact on results.
+The resulting sample includes 19,961 households of which 9,190 received their ESP by direct deposit, 10,744 by mail, and the remaining 27 unsure.\footnote{For those households unsure of method of receipt, I used the union of eligibility dates across both methods of receipt when trimming the sample.}
+
+Clearly the sample remaining is not randomly selected.
+However, if the timing of receipt for this sample is random conditional on receipt type, estimated effects are unbiased, and the effects are representative of trimmed sample.
+There may be a few concerns that could lead to nonrandom timing of receipt.
+First, it is possible that households do not report their receipt dates correctly.
+Second, even if households report the dates correctly, we cannot observe when households were supposed to receive their payments.
+As such, it is possible that there is nonrandom selection where those reporting receiving their payments late, albeit still inside the permissible period, were supposed to receive their payments sooner.
+To give some confidence that households are reporting correctly, I plot the daily counts of reported receipt dates in Figure \ref{ts_esp}.
+Interestingly, the spikes early in the distribution period line up with the distribution dates reported by the IRS for direct deposit.
+Hence, I proceed under the assumption that all households reported correct receipt dates, with the caveat that the reported dates are perhaps more accurate in the direct-deposit subsample.
+Furthermore, the inclusion window for mailed checks is much larger, which provides greater opportunity for nonrandom selection of late recipients into the sample.
+
+I present descriptive statistics of the selected sample in Tables \ref{table_summary_cat} and \ref{table_summary_num}, which may be helpful for deciding whether the results may generalize to other populations and grasping the magnitude of effects.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Methods
@@ -253,7 +271,7 @@ Another option is to not include household fixed effects.} Identification of the
 As such, I interact $\gamma_t$ by method of payment indicators as well as estimate my primary specifications restricting the sample to only those who receive their ESP by the same method.
 Under unconfoundedness and SUTVA, the coefficients $\text{ESP}_{i(t)}$ for $i(t) \geq 0$ identify the (weighted) average treatment effect on the treated (ATT) of receiving an ESP on purchases of $y$ after $t$ weeks.
 I use the inverse hyperbolic sine of levels of $y$ such that the coefficients can be interpreted as percent changes.
-When reporting the average effect over the first month after receipt, I average %TODO
+When reporting average effects over multiple weeks, I average the relevant indicator coefficients.
 
 In this setting, the \textit{timing} of treatment is randomly assigned, and treated units remain ``treated" for all following periods.
 \textcite{athey2021design} show that causal effects in such a ``staggered adoption design" can be estimated using the standard differences-in-differences (DID) estimator and intepreted as a weighted average of the average effect of changing the adoption date.
@@ -286,51 +304,61 @@ In this section I present results using the methodology discussed in Section \re
 
 \subsection{Effect on panelist behaviors}
 
-I next estimate the effects of receiving an ESP on panelist behaviors, such as number of trips taken, items scanned, and total amount spent using equation \ref{spec_es}.
+I first estimate the effects of receiving an ESP on panelist behaviors, such as number of trips taken, items scanned, and total amount spent using Equation \ref{spec_es}.
+I present my findings in Table \ref{table_behaviors_all} and select event study coefficient plots in Figure \ref{es_behaviors_all}.
+In general, I find small, often insignificant effects in the first few weeks after receipt, and zero effect beyond that.
+Specifically, like \textcite{broda2014economic}, I find significant effects on total spending in the first week after receipt; however, I find more modest effects of about 6\%.
+I find insignificant and close to zero effects on total amount spent on scanned items, scanned food, and quantities of both.
+Finally, I find a tight zero effect on number of trips, suggesting that on average, the ESP did not increase the number of trips taken by panelists.
 
-
+I second estimate Equation \ref{spec_het} using liquidity constraints as the interaction variable of interest.
+Specifically, I can observe whether a household reports having at least two months of income accessible in liquid assets.
+I report results in Table \ref{table_behaviors_inter} and event study relative-time coefficients in the left panel of Figure \ref{es_interaction}.
+Interestingly, all outcomes of interest are statistically significantly significant and large.
+Compared to high liquidity households, low liquidity households increased their total expenditures by 17\% on all purchases, 15\% on scanned goods, and 12\% on food items.
+These households purchased about 10\% more items and went on 5\% more trips in the first week.
+By the second week, the effects fade somewhat but remain significant for total expenditures and trips.
+The results are driven by direct deposit panelists, though the results are directionally positive for check-recipients as well.
 
 \subsection{Effect on nutrient demand}
 
 Next I examine the effects of receiving an ESP on nutrients purchased.
+The procedure is similar to that discussed in the previous section with panelist behaviors: I start by estimating the average effect across the sample and then estimate the difference in treatment effects for the low-liquidity subsample.
 
-
-\subsection{Treatment effect heterogeneity}
-
-Here I investigate heterogeneous treatment effect estimates along household characteristic dimensions.
-
-I start by estimating Equation \ref{spec_het} using as outcomes the inverse hyperbolic sine of grams of sugar and ounces of regular soda purchased.
-For the interaction terms, I use dummies for
+The story is similar for nutrients.
+When estimating treatment effects across the entire sample, as can be seen in Table \ref{table_nutrients_all} and Figure \ref{es_nutrients_all}, the average effects are small and insignificant.
+However, when including an interaction term for low liquidity households, the average effects are nearly all significant and large during the week of receipt, as can be seen in Table \ref{table_nutrients_inter}.
+Notably, calories increase by 19\%, which can be explained by increases in fat, carbohydrates, and protein of 11\%, 16\%, and 13\%, respectively.
+Alcohol (volume) purchases increase by about 10\%, which may carry externalties that could be nontrivial in the aggregate.
+By the second week, the average effects have tapered off and are often insignificant, though still directionally positive and often large.
 
 %%%%%%%%%%%%%%%%%%%%%%%
 % Discussion
 %%%%%%%%%%%%%%%%%%%%%%%
-\section{Discussion} \label{discussion}
+\section{Discussion and Conclusion} \label{discussion}
 
-%We find that TODO.
+While conditional cash transfers in the U.S. are well studied, there is limited research on the effects of unconditional cash transfers.
+Given that ESPs can be sent quickly to help reverse contractionary economic periods, political leaders are increasingly talking about Universal Basic Income, and ESPs have recently been deployed during the COVID-19 epidemic, it is important to understand how ESPs affect consumer decisions that have downstream health consequences.
+Little is known about how ESPs affect nutritional choices, which is troubling given the large public investment in programs that assist nutritional choices and costs incurred by nutrition-related health complications.
 
-% Robustness Checks TODO
+In this paper I exploit the ESPs sent as part of the Economic Stimulus Act of 2008, which was designed to increase consumer spending and help reduce the downturn from the 2007 financial crisis.
+This policy delivered payments to US taxpayers at quasi-random delivery times, allowing for identification of causal effects using the exogenous timing.
+In the sample studied, these payments averaged \$900 and arrived between late April and late July 2008, allowing me to identify the effect of receiving an ESP up to 12 weeks early.
+In general, I find evidence that the average effects on nutrient purchases were modest, which is consistent with the Permanent Income Hypothesis.
+However, households with low amounts of liquid assets had large and significant increases of purchases of all nutrients, but particuarly those the USDA has encouraged reducing consumption.
+Collectively, I interpret this as evidence that one-time, large income shocks are unlikely to improve diet healthfulness in the short run and may even reduce healthfulness.
+However, one may view this optimistically as evidence that households splurge on special occasions (e.g. receiving a large payment from the government) and may otherwise follow a comparatively healthier diet.
 
 \subsection{Limitations}
 
-The methods used in this paper have some limitations.
-First, I rely on panelists' reported ESP receipt date, which may contain measurement error and bias the coefficients towards zero.
+This paper is primarily limited by data concerns, particuarly reliance on self-reporting of ESP receipt date.
+Besides containing measurement error, those who receive their payments later in the cycle (by factors other than random chance) may have unobservable factors that confound the treatment effect estimates.
+I present some evidence that these populations are likely small, at least among those reporting direct deposit payments; alas, this error is not obserable.
 Second, the results are specific to the time period studied, namely the beginning of the worst economic recession in recent history.
 It is possible that the results may look very different if, for example, payments were made during an expansionary period.
 Third, the estimates are specific to a one-time transfer.
 Further research is warranted for estimating the impact of repeat transfers on household nutrition, which would help policymakers predict nutrition-related health impacts of transfer programs like UBI.
 
-%%%%%%%%%%%%%%%%%%%%%%%
-% conclusion
-%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Conclusion} \label{conclusion}
-
-Economic stimulus payments and other forms of unconditional cash transfers are increasingly being used in developed countries to transfer income without causing distortionary behaviors or incurring loss from means-testing.
-Additionally, ESPs can be deployed quickly to reverse contractionary economic periods.
-Despite their prevalence, little is known about how ESPs affect nutritional choices, which is troubling given the large public investment in programs that assist nutritional choices and costs incurred by nutrition-related health complications.
-In this paper I find that the ESPs distributed as part of the Economic Stimulus Act of 2008 caused recipient households to increase purchases of food by XX\%.
-The additional food was not representative of pre-ESP nutrient bundles: households purchased much more XX.
 
 \clearpage
 \printbibliography
@@ -358,6 +386,17 @@ The additional food was not representative of pre-ESP nutrient bundles: househol
 \input{../tables/nutrients_inter.tex}
 
 %%% FIGURES
+
+% esp receipt date
+\clearpage
+\begin{figure}[t]
+\begin{center}
+\caption{Dates ESP reported received}
+\label{ts_esp}
+\includegraphics[width=1\textwidth, angle=0]{../figures/ts_esp.pdf}
+\footnotesize
+\end{center}
+\end{figure}
 
 % behaviors
 \clearpage
